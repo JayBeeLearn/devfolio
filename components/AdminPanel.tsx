@@ -525,36 +525,116 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ data, updateData, onLogout }) =
           </div>
 
           {/* Personal Info Section */}
-          <div className="bg-white dark:bg-zinc-900 p-8 rounded-3xl border border-zinc-200 dark:border-zinc-800 space-y-6">
-            <h3 className="text-2xl font-black border-b border-zinc-100 dark:border-zinc-800 pb-4">Personal Info</h3>
-            <div className="grid md:grid-cols-2 gap-6">
-               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-zinc-500">Full Name</label>
+          <div className="bg-white dark:bg-zinc-900 p-8 rounded-[32px] border border-zinc-200 dark:border-zinc-800 space-y-8">
+            <div>
+              <h3 className="text-2xl font-black mb-1">Personal Identity</h3>
+              <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest">Base bio information</p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em] ml-1">Full Name</label>
                 <input 
                   type="text" 
                   value={localData.bio.name}
                   onChange={(e) => setLocalData({...localData, bio: {...localData.bio, name: e.target.value}})}
-                  className="w-full px-4 py-3 rounded-lg bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700" 
+                  className="w-full px-6 py-4 rounded-2xl bg-zinc-50 dark:bg-black/20 border border-zinc-200 dark:border-zinc-800 focus:border-blue-500 transition-all outline-none font-bold" 
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase text-zinc-500">Role</label>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em] ml-1">Professional Role</label>
                 <input 
                   type="text" 
                   value={localData.bio.role}
                   onChange={(e) => setLocalData({...localData, bio: {...localData.bio, role: e.target.value}})}
-                  className="w-full px-4 py-3 rounded-lg bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700" 
+                  className="w-full px-6 py-4 rounded-2xl bg-zinc-50 dark:bg-black/20 border border-zinc-200 dark:border-zinc-800 focus:border-blue-500 transition-all outline-none font-bold" 
                 />
               </div>
             </div>
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase text-zinc-500">Short Bio</label>
+
+            <div className="space-y-3">
+              <label className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em] ml-1">Elevator Pitch (Bio)</label>
               <textarea 
                 rows={4} 
                 value={localData.bio.description}
                 onChange={(e) => setLocalData({...localData, bio: {...localData.bio, description: e.target.value}})}
-                className="w-full px-4 py-3 rounded-lg bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 resize-none" 
+                className="w-full px-6 py-4 rounded-2xl bg-zinc-50 dark:bg-black/20 border border-zinc-200 dark:border-zinc-800 focus:border-blue-500 transition-all outline-none resize-none leading-relaxed" 
               />
+            </div>
+
+            <div className="space-y-3">
+              <label className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em] ml-1">Avatar Image URL</label>
+              <input 
+                type="text" 
+                value={localData.bio.avatarUrl}
+                onChange={(e) => setLocalData({...localData, bio: {...localData.bio, avatarUrl: e.target.value}})}
+                className="w-full px-6 py-4 rounded-2xl bg-zinc-50 dark:bg-black/20 border border-zinc-200 dark:border-zinc-800 focus:border-blue-500 transition-all outline-none font-mono text-sm" 
+              />
+            </div>
+          </div>
+
+          {/* Socials & Contact Section */}
+          <div className="bg-white dark:bg-zinc-900 p-8 rounded-[32px] border border-zinc-200 dark:border-zinc-800 space-y-8">
+            <div>
+              <h3 className="text-2xl font-black mb-1">Social Connectivity</h3>
+              <p className="text-xs text-zinc-500 font-bold uppercase tracking-widest">Digital presence & Reach</p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+               <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em] ml-1">Work Email</label>
+                <input 
+                  type="email" 
+                  value={localData.contactInfo.email}
+                  onChange={(e) => setLocalData({...localData, contactInfo: {...localData.contactInfo, email: e.target.value}})}
+                  className="w-full px-6 py-4 rounded-2xl bg-zinc-50 dark:bg-black/20 border border-zinc-200 dark:border-zinc-800 focus:border-blue-500 transition-all outline-none font-bold" 
+                />
+              </div>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em] ml-1">Phone Number</label>
+                <input 
+                  type="text" 
+                  value={localData.contactInfo.phoneNumber}
+                  onChange={(e) => setLocalData({...localData, contactInfo: {...localData.contactInfo, phoneNumber: e.target.value}})}
+                  className="w-full px-6 py-4 rounded-2xl bg-zinc-50 dark:bg-black/20 border border-zinc-200 dark:border-zinc-800 focus:border-blue-500 transition-all outline-none font-bold" 
+                />
+              </div>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em] ml-1">GitHub Profile</label>
+                <input 
+                  type="text" 
+                  value={localData.contactInfo.github}
+                  onChange={(e) => setLocalData({...localData, contactInfo: {...localData.contactInfo, github: e.target.value}})}
+                  className="w-full px-6 py-4 rounded-2xl bg-zinc-50 dark:bg-black/20 border border-zinc-200 dark:border-zinc-800 focus:border-blue-500 transition-all outline-none font-mono text-sm" 
+                />
+              </div>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em] ml-1">LinkedIn Profile</label>
+                <input 
+                  type="text" 
+                  value={localData.contactInfo.linkedin}
+                  onChange={(e) => setLocalData({...localData, contactInfo: {...localData.contactInfo, linkedin: e.target.value}})}
+                  className="w-full px-6 py-4 rounded-2xl bg-zinc-50 dark:bg-black/20 border border-zinc-200 dark:border-zinc-800 focus:border-blue-500 transition-all outline-none font-mono text-sm" 
+                />
+              </div>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em] ml-1">Website link</label>
+                <input 
+                  type="text" 
+                  value={localData.contactInfo.website}
+                  onChange={(e) => setLocalData({...localData, contactInfo: {...localData.contactInfo, website: e.target.value}})}
+                  className="w-full px-6 py-4 rounded-2xl bg-zinc-50 dark:bg-black/20 border border-zinc-200 dark:border-zinc-800 focus:border-blue-500 transition-all outline-none font-mono text-sm" 
+                />
+              </div>
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase text-zinc-500 tracking-[0.2em] ml-1">Facebook Profile (Optional)</label>
+                <input 
+                  type="text" 
+                  value={localData.contactInfo.facebook}
+                  onChange={(e) => setLocalData({...localData, contactInfo: {...localData.contactInfo, facebook: e.target.value}})}
+                  className="w-full px-6 py-4 rounded-2xl bg-zinc-50 dark:bg-black/20 border border-zinc-200 dark:border-zinc-800 focus:border-blue-500 transition-all outline-none font-mono text-sm" 
+                />
+              </div>
             </div>
           </div>
 

@@ -80,3 +80,33 @@ body {
   border-color: var(--primary);
   box-shadow: 0 10px 30px -10px var(--primary-glow);
 }
+
+.glass-card {
+  @apply bg-white/5 dark:bg-black/20 backdrop-blur-xl border border-[var(--border-color)] shadow-2xl;
+}
+
+.section-fade {
+  @apply transition-all duration-1000 ease-out;
+}
+
+.premium-gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-br from-[var(--text-main)] via-[var(--text-main)] to-[var(--primary)];
+}
+
+.text-outline {
+  -webkit-text-stroke: 1px currentColor;
+  color: transparent;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+h1, h2, h3, .font-accent {
+  text-wrap: balance;
+}
