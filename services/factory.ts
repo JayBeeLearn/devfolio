@@ -7,14 +7,12 @@ export type BackendType = 'local' | 'firebase' | 'supabase';
 
 export class ServiceFactory {
   static createService(type: BackendType): PortfolioService {
-    // In a real app, we might pass config from env vars here
-    const config = {}; 
 
     switch (type) {
       case 'firebase':
-        return new FirebasePortfolioService(config);
+        return new FirebasePortfolioService();
       case 'supabase':
-         return new SupabasePortfolioService(config);
+         return new SupabasePortfolioService();
       case 'local':
       default:
         return new LocalPortfolioService();

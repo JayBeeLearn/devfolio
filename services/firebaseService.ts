@@ -12,7 +12,7 @@ export class FirebasePortfolioService implements PortfolioService {
   private db: any;
   private storage: any;
 
-  constructor(config: any) { // Config passed from factory.ts
+  constructor() {
     const firebaseConfig = {
       apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
       authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,

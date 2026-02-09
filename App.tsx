@@ -1,39 +1,21 @@
-
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Moon, 
-  Sun, 
-  Download, 
-  Settings as SettingsIcon, 
-  User, 
-  LogOut,
-  ChevronRight,
-  Monitor,
-  Layout,
-  FileText
-} from 'lucide-react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { PortfolioData, ThemeType } from './types';
-import { INITIAL_DATA } from './constants';
-import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import SkillsSection from './components/SkillsSection';
 import ExperienceSection from './components/ExperienceSection';
 import ProjectsSection from './components/ProjectsSection';
 import ContactSection from './components/ContactSection';
 import AdminPanel from './components/AdminPanel';
-import { PortfolioService } from './services/types';
+import MainLayout from './components/MainLayout';
 import { ServiceFactory, BackendType } from './services/factory';
 import SetupWizard from './components/SetupWizard';
-import { ThemeProvider } from './contexts/ThemeContext';
 
 const App: React.FC = () => {
   const [data, setData] = useState<PortfolioData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [, setIsAdmin] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
 
   const service = useMemo(() => {
     const type = import.meta.env.VITE_BACKEND_TYPE as BackendType;
@@ -89,31 +71,19 @@ const App: React.FC = () => {
 
   const toggleDarkMode = () => {
     if (!data) return;
-    const newData = {
+    updateData({
       ...data,
       settings: { ...data.settings, darkMode: !data.settings.darkMode }
-    };
-    updateData(newData);
+    });
   };
 
   const setTheme = (theme: ThemeType) => {
     if (!data) return;
-    const newData = {
+    updateData({
       ...data,
       settings: { ...data.settings, theme }
-    };
-    updateData(newData);
+    });
   };
-
-  const themeClasses = useMemo(() => {
-    if (!data?.settings) return '';
-    return `theme-${data.settings.theme} ${data.settings.darkMode ? 'dark' : ''}`;
-  }, [data?.settings?.theme, data?.settings?.darkMode]);
-
-  const themeData = useMemo(() => ({
-    'data-theme': data?.settings?.theme || 'minimal',
-    'data-dark': data?.settings?.darkMode ? 'true' : 'false'
-  }), [data?.settings?.theme, data?.settings?.darkMode]);
 
   const handleDownloadResume = () => {
     if (data?.settings.resumeUrl) {
@@ -123,9 +93,7 @@ const App: React.FC = () => {
     }
   };
 
-  if (!service) {
-    return <SetupWizard />;
-  }
+  if (!service) return <SetupWizard />;
 
   if (loading || !data) {
     return (
@@ -142,59 +110,36 @@ const App: React.FC = () => {
   const titles = data.settings.sectionTitles || {};
 
   return (
-    <ThemeProvider settings={data.settings}>
-      <div className={`min-h-screen transition-all duration-500 ${themeClasses}`} {...themeData}>
-        <Navbar 
-          data={data} 
-          toggleDarkMode={toggleDarkMode} 
-          setTheme={setTheme}
-          onDownloadResume={handleDownloadResume}
-        />
-        
-        <main className="container mx-auto px-6 py-12">
-          <AnimatePresence mode="wait">
-            <Routes location={location} key={location.pathname}>
-              <Route path="/" element={
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="space-y-32"
-                >
-                  {sortedSections.map(section => {
-                    switch(section.id) {
-                      case 'hero': return <Hero key="hero" data={data} />;
-                      case 'skills': return <SkillsSection key="skills" data={data} title={titles.skills} />;
-                      case 'experience': return <ExperienceSection key="experience" data={data} title={titles.experience} educationTitle={titles.education} certificationsTitle={titles.certifications} />;
-                      case 'projects': return <ProjectsSection key="projects" data={data} title={titles.projects} />;
-                      case 'contact': return <ContactSection key="contact" data={data} title={titles.contact} />;
-                      default: return null;
-                    }
-                  })}
-                </motion.div>
-              } />
-              <Route path="/admin" element={
-                <AdminPanel 
-                  data={data} 
-                  updateData={updateData} 
-                  onLogout={() => { setIsAdmin(false); navigate('/'); }}
-                />
-              } />
-            </Routes>
-          </AnimatePresence>
-        </main>
-
-        <footer className="fixed bottom-6 right-6 no-print z-50">
-          <button
-            onClick={() => navigate('/admin')}
-            className="p-3 rounded-full bg-zinc-800 text-white hover:bg-zinc-700 shadow-lg flex items-center justify-center transition-all hover:scale-110"
-            title="Admin Panel"
-          >
-            <SettingsIcon size={20} />
-          </button>
-        </footer>
-      </div>
-    </ThemeProvider>
+    <MainLayout 
+      data={data}
+      toggleDarkMode={toggleDarkMode}
+      setTheme={setTheme}
+      onDownloadResume={handleDownloadResume}
+    >
+      <Routes>
+        <Route path="/" element={
+          <div className="space-y-32">
+            {sortedSections.map(section => {
+              switch(section.id) {
+                case 'hero': return <Hero key="hero" data={data} />;
+                case 'skills': return <SkillsSection key="skills" data={data} title={titles.skills} />;
+                case 'experience': return <ExperienceSection key="experience" data={data} title={titles.experience} educationTitle={titles.education} certificationsTitle={titles.certifications} />;
+                case 'projects': return <ProjectsSection key="projects" data={data} title={titles.projects} />;
+                case 'contact': return <ContactSection key="contact" data={data} title={titles.contact} />;
+                default: return null;
+              }
+            })}
+          </div>
+        } />
+        <Route path="/admin" element={
+          <AdminPanel 
+            data={data} 
+            updateData={updateData} 
+            onLogout={() => { setIsAdmin(false); navigate('/'); }}
+          />
+        } />
+      </Routes>
+    </MainLayout>
   );
 };
 

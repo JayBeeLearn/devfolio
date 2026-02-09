@@ -10,7 +10,7 @@ const BUCKET_NAME = "portfolio-assets";
 export class SupabasePortfolioService implements PortfolioService {
   private supabase: any;
 
-  constructor(config: any) {
+  constructor() {
     const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
     const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
     
