@@ -1,0 +1,82 @@
+
+:root {
+  --primary: #2563eb;
+  --primary-glow: rgba(37, 99, 235, 0.4);
+  --bg-main: #ffffff;
+  --text-main: #09090b;
+  --text-muted: #71717a;
+  --border-color: #e4e4e7;
+  --card-bg: #fafafa;
+  --selection-bg: #2563eb;
+  --selection-text: #ffffff;
+  --accent-font: 'Inter', sans-serif;
+}
+
+[data-theme='dark'] {
+  --bg-main: #09090b;
+  --text-main: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --border-color: #27272a;
+  --card-bg: #18181b;
+}
+
+/* CYBERPUNK THEME */
+[data-theme='cyberpunk'] {
+  --primary: #d946ef;
+  --primary-glow: rgba(217, 70, 239, 0.6);
+  --accent-font: 'JetBrains Mono', monospace;
+  --selection-bg: #d946ef;
+}
+
+[data-theme='cyberpunk'][data-dark='true'] {
+  --bg-main: #000000;
+  --text-main: #ffffff;
+  --card-bg: #0a0a0a;
+  --border-color: #d946ef44;
+}
+
+/* ELEGANT THEME */
+[data-theme='elegant'] {
+  --primary: #78350f;
+  --primary-glow: rgba(120, 53, 15, 0.2);
+  --accent-font: 'Playfair Display', serif;
+  --selection-bg: #fef3c7;
+  --selection-text: #78350f;
+}
+
+[data-theme='elegant'][data-dark='true'] {
+  --bg-main: #1a1510;
+  --text-main: #fef3c7;
+  --card-bg: #2d241c;
+  --border-color: #78350f44;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+}
+
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+.font-accent {
+  font-family: var(--accent-font);
+}
+
+.text-glow {
+  text-shadow: 0 0 10px var(--primary-glow);
+}
+
+.theme-card-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-card-transition:hover {
+  transform: translateY(-4px);
+  border-color: var(--primary);
+  box-shadow: 0 10px 30px -10px var(--primary-glow);
+}
